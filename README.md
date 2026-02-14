@@ -92,7 +92,7 @@ The pipeline also uses Airflow for orchestration and MinIO for S3-compatible sto
       Other KPIs
 ```
 
-<!-- Technologies Used -->
+### Technologies Used 
 ```
 Docker Compose – Container orchestration
 
@@ -111,7 +111,7 @@ Python & Pandas – Data handling
 ### Setup Instructions
 1. Clone the Repository
 ```
-git clone <your-repo-url>
+git clone https://github.com/Adarsh12325/Batch-ETL-Pipeline-with-Spark-Airflow-MinIO-and-Streamlit
 cd modern-data-pipeline
 ```
 
@@ -120,20 +120,20 @@ cd modern-data-pipeline
 docker-compose up --build -d
 ```
 
-<!-- This will start the following containers: -->
+- This will start the following containers:
 ```
 Service         	Port(s)	             Purpose
 ------------------------------------------------------------------
-postgres	        5432	              Analytics database
+postgres	        5432	               Analytics database
 spark	            7077 / 8080	          Spark master for ETL
 spark-worker	    N/A	                  Spark worker
-airflow	            8081	              DAG orchestration
-streamlit	        8501	              Dashboard
+airflow	          8081	               DAG orchestration
+streamlit	        8501	               Dashboard
 minio	            9000 / 9001           S3-compatible storage
 ```
-```
-Note: MinIO console is at http://localhost:9001. Default credentials are:
 
+Note: MinIO console is at http://localhost:9001. Default credentials are:
+```
 Username: minioadmin
 
 Password: minioadmin
