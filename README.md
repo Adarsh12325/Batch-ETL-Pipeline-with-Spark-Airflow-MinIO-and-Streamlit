@@ -1,11 +1,57 @@
 # Batch ETL Pipeline with Spark, Airflow, MinIO and Streamlit
 ## Overview
-```
+
 This repository implements a Medallion Architecture-based ETL pipeline for ecommerce analytics. It extracts raw event data, processes it into Bronze → Silver → Gold layers using Spark, stores the Gold layer in PostgreSQL, and visualizes analytics in Streamlit.
 
 The pipeline also uses Airflow for orchestration and MinIO for S3-compatible storage.
-```
+
 ## Architecture Diagram
+```
+                     ┌───────────────┐
+                     │  Event Source │
+                     │ (CSV / Logs)  │
+                     └───────┬───────┘
+                             │
+                             ▼
+                     ┌───────────────┐
+                     │   MinIO S3    │
+                     │  Bronze Layer │
+                     │ bronze/events │
+                     └───────┬───────┘
+                             │
+                             ▼
+                     ┌───────────────┐
+                     │ Apache Spark  │
+                     │ Silver Layer  │
+                     │   Cleans &    │
+                     │ Transforms    │
+                     │ Adds Partitions│
+                     │ silver/events │
+                     └───────┬───────┘
+                             │
+                             ▼
+                     ┌───────────────┐
+                     │ Apache Spark  │
+                     │  Gold Layer   │
+                     │ Aggregations  │
+                     │ gold/aggregations │
+                     └───────┬───────┘
+                             │
+          ┌──────────────────┴──────────────────┐
+          │                                     │
+          ▼                                     ▼
+  ┌───────────────┐                     ┌───────────────┐
+  │ PostgreSQL DB │                     │ Airflow DAG   │
+  │ daily_metrics │                     │ Orchestrator │
+  └───────────────┘                     └───────────────┘
+          │                                     │
+          ▼                                     │
+  ┌───────────────┐                             │
+  │ Streamlit     │ <───────────────────────────┘
+  │ Dashboard     │
+  │ Visualization │
+  └───────────────┘
+```
 
 ### Explanation of Data Flow:
 
@@ -27,7 +73,7 @@ The pipeline also uses Airflow for orchestration and MinIO for S3-compatible sto
 
 - Spark aggregates Silver data (daily metrics, event counts).
 
-- Writes aggregated Parquet files to gold/aggregations/.
+- Writes aggregated Parquet files to gold/daily_metrics/.
 
 - PostgreSQL (Analytics Database)
 
@@ -38,12 +84,13 @@ The pipeline also uses Airflow for orchestration and MinIO for S3-compatible sto
 <!-- Streamlit Dashboard -->
 
 - Connects to PostgreSQL to visualize metrics:
+```
+      Daily events trend
 
-Daily events trend
+      Daily active users
 
-Daily active users
-
-Other KPIs
+      Other KPIs
+```
 
 <!-- Technologies Used -->
 ```
@@ -92,7 +139,7 @@ Username: minioadmin
 Password: minioadmin
 ```
 
-### Airflow Setup
+3. Airflow Setup
 ```
 Initialize Airflow DB and create Admin user
 
@@ -110,14 +157,14 @@ Access Airflow UI
 Open: http://localhost:8081
 ```
 
-#### Trigger the DAG
+4. Trigger the DAG
 ```
 Go to DAGs → batch_etl_pipeline → Trigger DAG.
 
 Monitor the DAG run and verify all tasks succeed.
 ```
 
-### Verify Data in MinIO
+5. Verify Data in MinIO
 ```
 Open MinIO Console: http://localhost:9001
 
@@ -127,10 +174,10 @@ bronze/events/
 
 silver/events/
 
-gold/aggregations/
+gold/daily_metrics/
 ```
 
-### Verify Data in PostgreSQL
+6. Verify Data in PostgreSQL
 
 Connect to Postgres container:
 ```
@@ -144,11 +191,11 @@ SELECT * FROM daily_metrics LIMIT 5;
 
 You should see data like:
 ```
-event_date	daily_active_users	total_events
-2026-02-13	10000	763823
-2026-02-12	10000	236177
+event_date	 daily_active_users	  total_events
+2026-02-13	 10000	               763823
+2026-02-12	 10000	               236177
 ```
-### Access Streamlit Dashboard
+7. Access Streamlit Dashboard
 ```
 Open Streamlit app: http://localhost:8501
 ```
@@ -162,7 +209,7 @@ Trend charts for events and active users
 
 ```
 
-##### Stopping the Pipeline
+8. Stopping the Pipeline
 ```
 docker-compose down
 ```
