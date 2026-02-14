@@ -55,11 +55,11 @@ The pipeline also uses Airflow for orchestration and MinIO for S3-compatible sto
 
 ### Explanation of Data Flow:
 
-<!-- Bronze Layer (Raw Data) -->
+#### Bronze Layer (Raw Data)
 
 - CSV event logs are ingested from the source into MinIO’s bronze/events/ bucket.
 
-<!-- Silver Layer (Clean & Transform) -->
+#### Silver Layer (Clean & Transform)
 
 - Spark reads Bronze data.
 
@@ -69,7 +69,7 @@ The pipeline also uses Airflow for orchestration and MinIO for S3-compatible sto
 
 - Writes Parquet files into silver/events/ bucket.
 
-<!-- Gold Layer (Aggregated Metrics) -->
+#### Gold Layer (Aggregated Metrics)
 
 - Spark aggregates Silver data (daily metrics, event counts).
 
@@ -81,7 +81,7 @@ The pipeline also uses Airflow for orchestration and MinIO for S3-compatible sto
 
 - Loads data into PostgreSQL (daily_metrics table) for reporting.
 
-<!-- Streamlit Dashboard -->
+#### Streamlit Dashboard
 
 - Connects to PostgreSQL to visualize metrics:
 ```
@@ -115,7 +115,7 @@ git clone https://github.com/Adarsh12325/Batch-ETL-Pipeline-with-Spark-Airflow-M
 cd Batch-ETL-Pipeline-with-Spark-Airflow-MinIO-and-Streamlit
 ```
 
-1. Build and Start Services Using Docker Compose
+2. Build and Start Services Using Docker Compose
 ```
 docker-compose up --build -d
 ```
