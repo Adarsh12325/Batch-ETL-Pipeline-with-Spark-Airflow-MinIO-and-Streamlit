@@ -240,5 +240,6 @@ Batch-ETL-Pipeline-with-Spark-Airflow-MinIO-and-Streamlit/
 ├─ docker-compose.yml
 ├─ Dockerfile          # Dockerfile
 ├─ README.md
-└─ Demo_Video/         # pipeline demo
+├─ events.csv
+└─ Demo_Video/       # pipeline demo
 ```
