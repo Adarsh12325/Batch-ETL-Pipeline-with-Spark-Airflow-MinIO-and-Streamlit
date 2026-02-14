@@ -112,7 +112,7 @@ Python & Pandas – Data handling
 1. Clone the Repository
 ```
 git clone https://github.com/Adarsh12325/Batch-ETL-Pipeline-with-Spark-Airflow-MinIO-and-Streamlit
-cd modern-data-pipeline
+cd Batch-ETL-Pipeline-with-Spark-Airflow-MinIO-and-Streamlit
 ```
 
 1. Build and Start Services Using Docker Compose
@@ -232,7 +232,7 @@ Verify the column exists in Postgres. Otherwise, modify app.py to use available 
 
 ### Folder Structure
 ```
-modern-data-pipeline/
+Batch-ETL-Pipeline-with-Spark-Airflow-MinIO-and-Streamlit/
 ├─ dags/               # Airflow DAG scripts
 ├─ scripts/            # ETL Python scripts (load_gold.py, etc.)
 ├─ spark/              # Spark jobs & configs
