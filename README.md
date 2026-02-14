@@ -127,7 +127,7 @@ Service         	Port(s)	             Purpose
 postgres	        5432	               Analytics database
 spark	            7077 / 8080	          Spark master for ETL
 spark-worker	    N/A	                  Spark worker
-airflow	          8081	               DAG orchestration
+airflow	            8081	               DAG orchestration
 streamlit	        8501	               Dashboard
 minio	            9000 / 9001           S3-compatible storage
 ```
